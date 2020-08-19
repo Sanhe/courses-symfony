@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: cs_app
       SERVICE_TAGS: dev
     working_dir: /var/www/app
     volumes:
@@ -19,24 +19,23 @@ services:
       - app-network
 
   cs_nginx:
-    image: nginx:alpine
-    container_name: nginx
+    container_name: cs_nginx
     restart: unless-stopped
     tty: true
     build:
       context: ./nginx
       dockerfile: ./Dockerfile
     volumes:
-      - ./nginx/conf.d.d/:/etc/nginx/conf.d.d/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./data/logs:/var/log/nginx/
       - ./app:/var/www/app
     links:
-      - app
+      - cs_app
     ports:
       - '8001:80'
       - "443:443"
     depends_on:
-      - cs_app1
+      - cs_app
     networks:
       - app-network
 
