@@ -32,8 +32,8 @@ services:
     links:
       - cs_app
     ports:
-      - '8001:80'
-      - "443:443"
+      - '8001:8001'
+#      - "443:443"
     depends_on:
       - cs_app
     networks:
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: root
       MYSQL_ROOT_PASSWORD: r00t
@@ -53,7 +53,7 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./data/mysql:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
+#      - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
 
